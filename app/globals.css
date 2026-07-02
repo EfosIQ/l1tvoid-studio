@@ -46,111 +46,45 @@
 }
 
 :root {
-  color-scheme: light;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
   color-scheme: dark;
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* VOIDGPT · инженерный терминал-лаб. 4 цвета: void-black, bone, acid-lime, signal-amber */
+  --background: oklch(0.16 0.006 260);
+  --foreground: oklch(0.93 0.01 90);
+  --card: oklch(0.2 0.008 260);
+  --card-foreground: oklch(0.93 0.01 90);
+  --popover: oklch(0.2 0.008 260);
+  --popover-foreground: oklch(0.93 0.01 90);
+  --primary: oklch(0.86 0.21 130);
+  --primary-foreground: oklch(0.16 0.006 260);
+  --secondary: oklch(0.26 0.01 260);
+  --secondary-foreground: oklch(0.93 0.01 90);
+  --muted: oklch(0.24 0.009 260);
+  --muted-foreground: oklch(0.66 0.02 100);
+  --accent: oklch(0.8 0.16 75);
+  --accent-foreground: oklch(0.16 0.006 260);
+  --destructive: oklch(0.62 0.22 25);
+  --border: oklch(0.32 0.012 260);
+  --input: oklch(0.28 0.01 260);
+  --ring: oklch(0.86 0.21 130);
+  --chart-1: oklch(0.86 0.21 130);
+  --chart-2: oklch(0.8 0.16 75);
+  --chart-3: oklch(0.66 0.02 100);
+  --chart-4: oklch(0.5 0.015 260);
+  --chart-5: oklch(0.62 0.22 25);
+  --radius: 0.125rem;
+  --sidebar: oklch(0.2 0.008 260);
+  --sidebar-foreground: oklch(0.93 0.01 90);
+  --sidebar-primary: oklch(0.86 0.21 130);
+  --sidebar-primary-foreground: oklch(0.16 0.006 260);
+  --sidebar-accent: oklch(0.26 0.01 260);
+  --sidebar-accent-foreground: oklch(0.93 0.01 90);
+  --sidebar-border: oklch(0.32 0.012 260);
+  --sidebar-ring: oklch(0.86 0.21 130);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    color-scheme: dark;
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
-  }
+@theme inline {
+  --font-sans: var(--font-plex-sans), sans-serif;
+  --font-mono: var(--font-plex-mono), monospace;
 }
 
 @layer base {
@@ -159,5 +93,79 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* ---- Рукотворные детали VOIDGPT ---- */
+
+/* Инженерная миллиметровка на фоне */
+.blueprint-grid {
+  background-image:
+    linear-gradient(oklch(0.93 0.01 90 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.93 0.01 90 / 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Слегка повёрнутые элементы — след человеческой руки */
+.tilt-l {
+  transform: rotate(-0.7deg);
+}
+.tilt-r {
+  transform: rotate(0.5deg);
+}
+
+/* Мигающий курсор терминала */
+@keyframes blink-cursor {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.cursor-blink {
+  animation: blink-cursor 1.1s step-end infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor-blink {
+    animation: none;
+  }
+}
+
+/* Маркерное подчёркивание вручную */
+.hand-underline {
+  position: relative;
+}
+.hand-underline::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -6px;
+  bottom: -1px;
+  height: 7px;
+  background: var(--primary);
+  opacity: 0.35;
+  transform: rotate(-0.6deg) skewX(-8deg);
+  pointer-events: none;
+}
+
+/* Индикатор записи */
+@keyframes pulse-rec {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+.rec-pulse {
+  animation: pulse-rec 1.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rec-pulse {
+    animation: none;
   }
 }
