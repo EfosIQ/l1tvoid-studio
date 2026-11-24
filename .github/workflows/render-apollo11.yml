@@ -22,7 +22,7 @@ jobs:
       - name: Install render dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y blender ffmpeg fonts-dejavu-core
+          sudo apt-get install -y blender ffmpeg fonts-dejavu-core espeak-ng
           python -m pip install --upgrade pip
           python -m pip install edge-tts
       - name: Prepare original score and subtitles
@@ -30,7 +30,11 @@ jobs:
       - name: Render procedural 3D animation
         run: blender -b -t 2 --python scripts/apollo11.py
       - name: Create Russian narration
-        run: edge-tts --voice ru-RU-DmitryNeural --rate=-4% --file scripts/narration.txt --write-media output/narration.mp3
+        run: |
+          if ! edge-tts --voice ru-RU-DmitryNeural --rate=-4% --file scripts/narration.txt --write-media output/narration.mp3; then
+            espeak-ng -v ru -s 145 -f scripts/narration.txt -w output/narration.wav
+            ffmpeg -y -i output/narration.wav output/narration.mp3
+          fi
       - name: Assemble vertical MP4
         run: |
           ffmpeg -y -framerate 24 -i output/frame_%04d.png -i output/narration.mp3 -i output/music.wav -vf "scale=1080:1920:flags=lanczos,subtitles=output/subtitles.srt:fontsdir=/usr/share/fonts/truetype/dejavu" -filter_complex "[1:a]volume=1.0[voice];[2:a]volume=0.20[music];[voice][music]amix=inputs=2:duration=longest:normalize=0[a]" -map 0:v -map "[a]" -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart output/apollo11_tiktok.mp4
