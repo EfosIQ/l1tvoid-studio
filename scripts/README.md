@@ -1,6 +1,6 @@
 # Apollo 11 vertical documentary
 
-The isolated `video/apollo-11-tiktok` branch builds a 40-second, 24 fps vertical documentary cut. It uses authentic Apollo 11 archival photographs from NASA/JSC, with a restrained Ken Burns camera move, photo-only cross-dissolves, editorial typography, compact styled Russian subtitles, Russian narration and original music.
+The isolated `video/apollo-11-tiktok` branch builds a 40-second, 24 fps vertical documentary cut. It uses authentic Apollo 11 archival photographs from NASA/JSC, with a restrained Ken Burns camera move, photo-only cross-dissolves, editorial typography, compact readable Russian subtitles with corrected SRT scale, Russian narration and original music.
 
 ## Render pipeline
 
