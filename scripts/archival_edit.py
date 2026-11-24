@@ -88,10 +88,10 @@ def add_gradients(im):
     return Image.alpha_composite(im.convert("RGBA"), overlay)
 
 def add_vignette(im):
-    mask = Image.new("L", (W, H), 0)
+    mask = Image.new("L", (W, H), 160)
     md = ImageDraw.Draw(mask)
-    md.ellipse((-int(W*0.28), -int(H*0.16), int(W*1.28), int(H*1.16)), fill=105)
-    mask = ImageOps.invert(mask).filter(ImageFilter.GaussianBlur(65))
+    md.ellipse((-int(W*0.28), -int(H*0.16), int(W*1.28), int(H*1.16)), fill=0)
+    mask = mask.filter(ImageFilter.GaussianBlur(65))
     black = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     black.putalpha(mask.point(lambda p: int(p * 0.48)))
     return Image.alpha_composite(im, black)
