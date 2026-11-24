@@ -132,13 +132,12 @@ def draw_graphics(im, scene, frame_index, overall_progress):
     d.rectangle((48, 941, 492, 943), fill=(255,255,255,38))
     return im
 
-def render(scene, progress, frame_index, overall_progress):
+def render_photo(scene, progress):
     photo = PHOTOS[scene["file"]]
     im = fit_with_motion(photo, scene, progress)
     im = add_gradients(im)
     im = add_vignette(im)
-    im = draw_graphics(im, scene, frame_index, overall_progress)
-    return im.convert("RGB")
+    return im.convert("RGBA")
 
 def main():
     total = sum(s["frames"] for s in SCENES)
@@ -157,13 +156,14 @@ def main():
         scene = SCENES[idx]
         local = frame - start
         p = local / max(1, scene["frames"] - 1)
-        image = render(scene, p, frame, frame / (total - 1))
-        # Cross-dissolve the last 2/3 second of each chapter into the next photograph.
+        image = render_photo(scene, p)
+        # Cross-dissolve photographs only; draw one clean title layer after the transition.
         if idx < len(SCENES) - 1 and local >= scene["frames"] - crossfade:
             alpha = (local - (scene["frames"] - crossfade)) / crossfade
             next_scene = SCENES[idx + 1]
-            next_image = render(next_scene, min(0.08, alpha * 0.08), frame, frame / (total - 1))
+            next_image = render_photo(next_scene, min(0.08, alpha * 0.08))
             image = Image.blend(image, next_image, clamp(alpha))
+        image = draw_graphics(image, scene, frame, frame / (total - 1)).convert("RGB")
         image.save(OUT / f"frame_{frame:04d}.jpg", "JPEG", quality=91, optimize=True, subsampling=0)
         if frame % 120 == 0 or frame == total - 1:
             print(f"[frames] {frame + 1}/{total}")

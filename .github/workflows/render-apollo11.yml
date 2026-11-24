@@ -43,7 +43,7 @@ jobs:
           fi
       - name: Assemble vertical MP4
         run: |
-          ffmpeg -y -framerate 24 -i output/frame_%04d.jpg -i output/narration.mp3 -i output/music.wav -vf "scale=1080:1920:flags=lanczos,subtitles=output/subtitles.srt:fontsdir=/usr/share/fonts/truetype/dejavu" -filter_complex "[1:a]volume=1.0[voice];[2:a]volume=0.20[music];[voice][music]amix=inputs=2:duration=longest:normalize=0[a]" -map 0:v -map "[a]" -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart output/apollo11_tiktok.mp4
+          ffmpeg -y -framerate 24 -i output/frame_%04d.jpg -i output/narration.mp3 -i output/music.wav -vf "scale=1080:1920:flags=lanczos,subtitles=output/subtitles.srt:fontsdir=/usr/share/fonts/truetype/dejavu:force_style='FontName=DejaVu Sans,FontSize=32,PrimaryColour=&H00FFFFFF,OutlineColour=&H99000000,BackColour=&H66000000,BorderStyle=3,Outline=0,Shadow=0,MarginL=90,MarginR=90,MarginV=220,Alignment=2'" -filter_complex "[1:a]volume=1.0[voice];[2:a]volume=0.20[music];[voice][music]amix=inputs=2:duration=longest:normalize=0[a]" -map 0:v -map "[a]" -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart output/apollo11_tiktok.mp4
       - uses: actions/upload-artifact@v4
         with:
           name: apollo11-tiktok
