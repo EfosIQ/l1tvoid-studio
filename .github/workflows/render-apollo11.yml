@@ -1,0 +1,38 @@
+name: Render Apollo 11 TikTok
+
+on:
+  push:
+    branches:
+      - video/apollo-11-tiktok
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install render dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y blender ffmpeg fonts-dejavu-core
+          python -m pip install --upgrade pip
+          python -m pip install edge-tts numpy
+      - name: Render 3D scenes
+        run: |
+          mkdir -p output
+          blender -b -t 2 --python scripts/apollo11.py
+      - name: Create Russian narration
+        run: |
+          edge-tts --voice ru-RU-DmitryNeural --rate=-4% --file scripts/narration.txt --write-media output/narration.mp3
+      - name: Assemble vertical video
+        run: |
+          ffmpeg -y -framerate 24 -i output/frame_%05d.png -i output/narration.mp3 -i output/music.wav -vf "scale=1080:1920:flags=lanczos,subtitles=output/subtitles.srt:fontsdir=/usr/share/fonts/truetype/dejavu" -filter_complex "[1:a]volume=1.0[voice];[2:a]volume=0.20[music];[voice][music]amix=inputs=2:duration=longest:normalize=0[a]" -map 0:v -map "[a]" -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart output/apollo11_tiktok.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apollo11-tiktok
+          path: output/apollo11_tiktok.mp4
+          retention-days: 14
