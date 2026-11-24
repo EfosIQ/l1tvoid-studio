@@ -24,15 +24,17 @@ jobs:
           export DEBIAN_FRONTEND=noninteractive
           for attempt in 1 2 3; do
             timeout 120s sudo apt-get -o Acquire::Retries=2 update && \
-              timeout 180s sudo apt-get install -y blender ffmpeg fonts-dejavu-core espeak-ng libegl1 libgl1 && break
+              timeout 180s sudo apt-get install -y ffmpeg fonts-dejavu-core espeak-ng && break
             if [ "$attempt" -eq 3 ]; then echo "Package installation failed after retries"; exit 1; fi
             sleep $((attempt * 20))
           done
-          python -m pip install --disable-pip-version-check edge-tts
+          python -m pip install --disable-pip-version-check edge-tts pillow
       - name: Prepare original score and subtitles
         run: python scripts/prepare_audio.py
-      - name: Render procedural 3D animation
-        run: blender -b -t 2 --python scripts/apollo11.py
+      - name: Download authentic NASA archive photographs
+        run: python scripts/fetch_archive.py
+      - name: Render cinematic documentary frames
+        run: python scripts/archival_edit.py
       - name: Create Russian narration
         run: |
           if ! edge-tts --voice ru-RU-DmitryNeural --rate=-4% --file scripts/narration.txt --write-media output/narration.mp3; then
@@ -41,7 +43,7 @@ jobs:
           fi
       - name: Assemble vertical MP4
         run: |
-          ffmpeg -y -framerate 24 -i output/frame_%04d.png -i output/narration.mp3 -i output/music.wav -vf "scale=1080:1920:flags=lanczos,subtitles=output/subtitles.srt:fontsdir=/usr/share/fonts/truetype/dejavu" -filter_complex "[1:a]volume=1.0[voice];[2:a]volume=0.20[music];[voice][music]amix=inputs=2:duration=longest:normalize=0[a]" -map 0:v -map "[a]" -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart output/apollo11_tiktok.mp4
+          ffmpeg -y -framerate 24 -i output/frame_%04d.jpg -i output/narration.mp3 -i output/music.wav -vf "scale=1080:1920:flags=lanczos,subtitles=output/subtitles.srt:fontsdir=/usr/share/fonts/truetype/dejavu" -filter_complex "[1:a]volume=1.0[voice];[2:a]volume=0.20[music];[voice][music]amix=inputs=2:duration=longest:normalize=0[a]" -map 0:v -map "[a]" -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart output/apollo11_tiktok.mp4
       - uses: actions/upload-artifact@v4
         with:
           name: apollo11-tiktok
