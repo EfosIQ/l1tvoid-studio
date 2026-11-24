@@ -4,13 +4,15 @@ os.makedirs("output",exist_ok=True)
 rate=44100; duration=40
 with wave.open("output/music.wav","wb") as w:
  w.setnchannels(2);w.setsampwidth(2);w.setframerate(rate)
+ buf=bytearray(rate*duration*4)
  for i in range(rate*duration):
   t=i/rate; beat=0.5+0.5*math.sin(2*math.pi*0.5*t)
   chord=[55,82.41,110,164.81]
   v=sum(math.sin(2*math.pi*f*t) for f in chord)/4
   swell=min(1,t/4)*min(1,(duration-t)/4)
   s=int(32767*.13*swell*(v*(.7+.3*beat)))
-  w.writeframesraw(struct.pack("<hh",s,s))
+  struct.pack_into("<hh",buf,i*4,s,s)
+ w.writeframes(buf)
 # Timed Russian subtitles, synced to narration beats.
 subs=[
 (0,4,"В июле 1969 года человечество решилось\nна то, что веками казалось невозможным."),
