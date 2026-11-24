@@ -1,0 +1,34 @@
+name: Render Apollo 11 TikTok
+on:
+  push:
+    branches:
+      - video/apollo-11-short-film
+    paths:
+      - "video/apollo11/**"
+      - ".github/workflows/render-apollo11.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install renderer and Russian voice
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng fonts-dejavu-core
+          python -m pip install --upgrade pip
+          pip install pillow numpy
+      - name: Render vertical film
+        working-directory: video/apollo11
+        run: python render.py
+      - name: Upload MP4
+        uses: actions/upload-artifact@v4
+        with:
+          name: apollo-11-tiktok-mp4
+          path: video/apollo11/apollo11_tiktok.mp4
+          if-no-files-found: error
+          retention-days: 14
