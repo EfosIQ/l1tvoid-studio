@@ -16,15 +16,19 @@ permissions:
 jobs:
   render:
     runs-on: ubuntu-24.04
-    timeout-minutes: 360
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
       - name: Install render dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y blender ffmpeg fonts-dejavu-core espeak-ng
-          python -m pip install --upgrade pip
-          python -m pip install edge-tts
+          export DEBIAN_FRONTEND=noninteractive
+          for attempt in 1 2 3; do
+            timeout 120s sudo apt-get -o Acquire::Retries=2 update && \
+              timeout 180s sudo apt-get install -y blender ffmpeg fonts-dejavu-core espeak-ng && break
+            if [ "$attempt" -eq 3 ]; then echo "Package installation failed after retries"; exit 1; fi
+            sleep $((attempt * 20))
+          done
+          python -m pip install --disable-pip-version-check edge-tts
       - name: Prepare original score and subtitles
         run: python scripts/prepare_audio.py
       - name: Render procedural 3D animation
