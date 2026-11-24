@@ -6,6 +6,10 @@ on:
       - video/apollo-11-tiktok
   workflow_dispatch:
 
+concurrency:
+  group: apollo11-render-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
