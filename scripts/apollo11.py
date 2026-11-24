@@ -6,7 +6,7 @@ OUT=os.path.abspath("output")
 os.makedirs(OUT,exist_ok=True)
 bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
 scene=bpy.context.scene
-scene.render.engine='BLENDER_EEVEE_NEXT'
+scene.render.engine='BLENDER_EEVEE'
 scene.eevee.taa_render_samples=16
 scene.render.resolution_x=540; scene.render.resolution_y=960; scene.render.resolution_percentage=100
 scene.render.fps=24
@@ -45,8 +45,14 @@ def starfield():
   x=((i*73)%101)/50-1; y=((i*37)%101)/50-1; z=-5-(i%7)*.2
   uv('Star',(x*8,y*13,z),(.012,.012,.012),mat('star'+str(i),(0.6+.4*(i%3)/3,0.7,1),0,.5,2),8,6)
 def title(main,sub,frame):
- t=text_obj(main,(-3.7,5.5,-1),.48,white);t.keyframe_insert(data_path='location',frame=frame)
- s=text_obj(sub,(-3.7,4.85,-1),.19,gold);s.keyframe_insert(data_path='location',frame=frame)
+ for body,y,size,material in [(main,4.0,.43,white),(sub,3.35,.19,gold)]:
+  ob=text_obj(body,(0,0,0),size,material)
+  ob.parent=cam
+  ob.location=(-2.75,y,-8)
+  ob.scale=(0,0,0);ob.keyframe_insert(data_path='scale',frame=max(1,frame-1))
+  ob.scale=(1,1,1);ob.keyframe_insert(data_path='scale',frame=frame)
+  ob.keyframe_insert(data_path='scale',frame=min(960,frame+170))
+  ob.scale=(0,0,0);ob.keyframe_insert(data_path='scale',frame=min(960,frame+190))
 # cinematic light
 light((5,7,8),1700,(.68,.78,1),7);light((-6,-1,4),700,(1,.35,.12),5)
 starfield()
