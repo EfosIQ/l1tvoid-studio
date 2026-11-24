@@ -1,4 +1,4 @@
-import wave, math, struct, re
+import wave, math, struct, re, os
 os.makedirs("output",exist_ok=True)
 # Original restrained cinematic pulse, no external copyrighted recording.
 rate=44100; duration=40
