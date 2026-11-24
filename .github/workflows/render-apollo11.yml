@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: apollo11-render-${{ github.ref }}
-  cancel-in-progress: true
+  group: apollo11-render-${{ github.run_id }}
+  cancel-in-progress: false
 
 permissions:
   contents: read
